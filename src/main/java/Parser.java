@@ -12,13 +12,13 @@ import java.util.Scanner;
 
 public class Parser {
 
-    //public static String url;
+    //Парсинг страницы
     private static Document getPage(String url) throws IOException {
-        //String url = "https://www.cbr.ru/currency_base/daily/";
         Document page = Jsoup.parse(new URL(url), 2000);
         return page;
     }
 
+    //Преобразование таблицы в массивы
     private static void getCurrency(Elements elements) {
         ArrayList<String> elem = new ArrayList<>();
         for (Element element:
@@ -43,7 +43,7 @@ public class Parser {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         System.out.println("Введите дату в следующем формате ДД.ММ.ГГГГ:");
         try (Scanner consoleDate = new Scanner(System.in)) {
             //Выбор даты для Банка
@@ -60,18 +60,12 @@ public class Parser {
             Document pageDate = getPage("https://www.cbr.ru/currency_base/daily/"+"?UniDbQuery.Posted=True&UniDbQuery.To="+date);
             Elements table = pageDate.select("div.table-wrapper");
             Elements currency = table.select("td");
-            //System.out.println(currency);
-
+            //Получение списка валют
             getCurrency(currency);
 
         } catch (IOException e) {
             System.out.println("Возникла ошибка!");
         }
-
-        Document page = getPage("https://www.cbr.ru/currency_base/daily/");
-        Elements buttonDate = page.select("#UniDbQuery_form > div > div > div > div");
-
-
     }
 
 }
