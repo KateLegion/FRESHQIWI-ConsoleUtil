@@ -33,12 +33,16 @@ public class Parser {
         for (int i = 3; i < elem.size(); i+=5) {
             nameArray.add(elem.get(i));
         }
+        ArrayList<String> countArray = new ArrayList<>();
+        for (int i = 2; i < elem.size(); i+=5) {
+            countArray.add(elem.get(i));
+        }
         ArrayList<String> valueArray = new ArrayList<>();
         for (int i = 4; i < elem.size(); i+=5) {
             valueArray.add(elem.get(i));
         }
         for (int i = 0; i < codeArray.size(); i++) {
-            System.out.println(codeArray.get(i) + " (" +
+            System.out.println(codeArray.get(i) + " (" + (Integer.parseInt(countArray.get(i)) > 1 ? countArray.get(i) + " " : "") +
                     nameArray.get(i) + "): " + valueArray.get(i));
         }
     }
