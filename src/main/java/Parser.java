@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Parser {
@@ -22,17 +20,25 @@ public class Parser {
     public static void main(String[] args) throws IOException {
         System.out.println("Введите дату в следующем формате ДД.ММ.ГГГГ:");
         try (Scanner consoleDate = new Scanner(System.in)) {
+            //Выбор даты для Банка
             String date = consoleDate.nextLine();
-
-            Document pageDate = getPage("https://www.cbr.ru/currency_base/daily/"+"?UniDbQuery.Posted=True&UniDbQuery.To="+date);
-            System.out.println(pageDate);
+            //Работа с корректностью даты
             LocalDate today = LocalDate.now();
-
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
             LocalDate dateParse = LocalDate.parse(date, formatter);
             if (dateParse.isAfter(today)) {
                 System.out.println("Введите корректную дату!");
                 throw new RuntimeException();
+            }
+            //Парсинг страницы
+            Document pageDate = getPage("https://www.cbr.ru/currency_base/daily/"+"?UniDbQuery.Posted=True&UniDbQuery.To="+date);
+            Elements table = pageDate.select("div.table-wrapper");
+            Elements currency = table.select("tr[td[class = hover]]");
+            System.out.println(table);
+
+            for (:
+                 ) {
+                
             }
         } catch (IOException e) {
             System.out.println("Возникла ошибка!");
